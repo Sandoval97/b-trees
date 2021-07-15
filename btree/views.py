@@ -5,7 +5,8 @@ from rest_framework.decorators import permission_classes, api_view
 
 from binarytree import build
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponseNotFound, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponseNotFound, \
+                        HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 
 from .helper import get_bfs, search, connect_nodes_util
@@ -21,7 +22,7 @@ def height(req, **kwargs):
 
     body = json.loads(body_unicode)
 
-    if not "toTree" in body:
+    if "toTree" not in body:
         return HttpResponseBadRequest("toTree list is required")
 
     tree_data = list(body['toTree'])
@@ -29,6 +30,7 @@ def height(req, **kwargs):
     tree = build(tree_data)
 
     return JsonResponse({"height": tree.height})
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -40,7 +42,7 @@ def neighbors(req, **kwargs):
 
     body = json.loads(body_unicode)
 
-    if not "toTree" in body or not "node" in body:
+    if "toTree" not in body or "node" not in body:
         return HttpResponseBadRequest("toTree and node are required")
 
     tree_data = body['toTree']
@@ -73,7 +75,7 @@ def bfs(req, **kwargs):
 
     body = json.loads(body_unicode)
 
-    if not "toTree" in body:
+    if "toTree" not in body:
         return HttpResponseBadRequest("toTree list is required")
 
     tree_data = body['toTree']
