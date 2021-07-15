@@ -1,4 +1,4 @@
-# GoCardless sample application
+# BTree sample application
 
 ## Setup
 
@@ -24,7 +24,6 @@ $ pip install -r requirements.txt
 
 Once `pip` has finished downloading the dependencies:
 ```sh
-$ cd test99
 $ python manage.py runserver
 ```
 And navigate to `http://127.0.0.1:8000/api/v1/b-trees/`.
