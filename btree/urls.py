@@ -6,7 +6,7 @@ from .views import height, neighbors, bfs
 app_name = "btree"
 
 urlpatterns = [
-    path('height/', height),
-    path('neighbors/', neighbors),
-    path('bfs/', bfs),
+    path('height/', height, name="height"),
+    path('neighbors/', neighbors, name="neighbors"),
+    path('bfs/', bfs, name="bfs"),
 ]

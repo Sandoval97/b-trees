@@ -1,0 +1,8 @@
+*.pyc
+.vscode/*
+*sqlite3*
+*env2/*
+__pycache__/*
+celerybeat-schedule.db
+starnic/settings/__pycache__/*
+starnic/__pycache__/*

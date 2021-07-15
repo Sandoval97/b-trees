@@ -1,39 +1,65 @@
 import json
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes, api_view
+
+from binarytree import build
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+from .helper import get_bfs, search, connect_nodes_util
 
-@csrf_exempt
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def height(req, **kwargs):
-    return JsonResponse({})
+    body_unicode = req.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    tree_data = body['toTree']
 
-@csrf_exempt
+    tree = build(tree_data)
+
+    return JsonResponse({"height": tree.height})
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def neighbors(req, **kwargs):
     body_unicode = req.body.decode('utf-8')
     body = json.loads(body_unicode)
-    tree = body['toTree']
-    node = body['node']
+    tree_data = body['toTree']
+    to_search = body['node']
 
-    index_node = tree.index(node)
-    left = None
-    right = None
+    tree = build(tree_data)
+    connect_nodes_util(tree)
+    connect_nodes_util(tree, False)
 
-    for number in range(index_node, len(tree) ):
-        if tree[number] % 2 == 0 and node != tree[number]:
-            right = tree[number]
-            break
+    search(tree, tree, to_search)
 
-    new_tree = tree[:index_node]
-    new_tree.reverse()
+    if hasattr(tree, "found_node"):
+        return JsonResponse({
+            "neighbors": {
+                "left": tree.found_node.leftNeighbour,
+                "right": tree.found_node.rightNeighbour
+            }
+        })
 
-    for number in new_tree:
-        if number % 2 == 0 and node != number:
-            left = number
-            break
-    
-    return JsonResponse({  "left": left, "right": right })
+    return HttpResponseNotFound(f"{to_search} wasn't found in the tree")
 
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def bfs(req, **kwargs):
-    return JsonResponse({})
+    body_unicode = req.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    tree_data = body['toTree']
+
+    tree = build(tree_data)
+
+    bfs = []
+
+    for x in tree.preorder:
+        bfs.append(x.value)
+
+    return JsonResponse({"bfs": get_bfs(tree)})
