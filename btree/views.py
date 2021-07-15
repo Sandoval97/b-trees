@@ -57,9 +57,4 @@ def bfs(req, **kwargs):
 
     tree = build(tree_data)
 
-    bfs = []
-
-    for x in tree.preorder:
-        bfs.append(x.value)
-
     return JsonResponse({"bfs": get_bfs(tree)})
