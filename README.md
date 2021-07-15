@@ -22,13 +22,63 @@ Then install the dependencies:
 $ pip install -r requirements.txt
 ```
 
+After you need to run migrations:
+
+```sh
+$ ./manage.py migrate
+```
+
+And create one superuser:
+
+```sh
+$ ./manage.py createsuperuser
+```
+
 Once `pip` has finished downloading the dependencies:
 ```sh
 $ ./manage.py runserver
 ```
 And navigate to `http://127.0.0.1:8000/api/v1/b-trees/`.
 
-## Available Endpoints
+## Auth Endpoints
+
+Login to get api information
+```sh
+    /api/v1/auth/signin/
+    
+    * input
+    json
+    {
+       "username": "XXXXXX",
+       "password": "XXXXXX"
+    }
+
+    * output
+    json
+        {
+            "refresh": "XXXXXX",
+            "access": "XXXXXX",
+        }
+```
+
+Refresh token
+```sh
+    /api/v1/auth/refresh/
+    
+    * input
+    json
+    {
+       "refresh": "refresh token",
+    }
+
+    * output
+    json
+        {
+            "access": "XXXXXX",
+        }
+```
+
+## BTree Endpoints
 
 ```sh
     /api/v1/b-trees/height
