@@ -6,7 +6,7 @@ The first thing to do is to clone the repository:
 
 ```sh
 $ git clone https://github.com/Sandoval97/b-trees.git
-$ cd test99
+$ cd b-trees
 ```
 
 Create a virtual environment to install dependencies in and activate it:
@@ -24,11 +24,11 @@ $ pip install -r requirements.txt
 
 Once `pip` has finished downloading the dependencies:
 ```sh
-$ python manage.py runserver
+$ ./manage.py runserver
 ```
 And navigate to `http://127.0.0.1:8000/api/v1/b-trees/`.
 ## Tests
 
 To run the tests, `cd` into the directory where `manage.py` is:
 ```sh
-$ python manage.py test
+$ ./manage.py test
