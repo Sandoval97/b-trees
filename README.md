@@ -32,12 +32,13 @@ And navigate to `http://127.0.0.1:8000/api/v1/b-trees/`.
 
 ```sh
     /api/v1/b-trees/height
+    
     * input
     json
     {
        "toTree": [1,2,3,4,5,6,7,8]
     }
-    ```
+
     * output
     json
         {
@@ -47,14 +48,42 @@ And navigate to `http://127.0.0.1:8000/api/v1/b-trees/`.
 Returns the height of a binary tree given an integers list
 
 ```sh
-    /api/v1/b-trees/height
+    /api/v1/b-trees/neighbors
+
+    * input
+    json
+    {
+        "toTree":[1,2,3,4,5,6,7,8],
+        "node": 2
+    }
+     
+    * output
+    json
+        {
+            "neighbors": [
+                "left": null
+                "right": 4
+            ]
+        }
 ```
-Returns the height of a binary tree given an integers list
+Returns the neighbor nodes of the node that contains the given integer.
 
 ```sh
     /api/v1/b-trees/height
+
+    * input
+    json
+    {
+        "toTree":[-3,-4,1],
+    }
+     
+    * output
+    json
+        {
+            "bfs": [-4,1,-3]
+        }
 ```
-Returns the height of a binary tree given an integers list
+Returns the breadth-first search (BFS) of the binary tree
 ## Tests
 
 To run the tests, `cd` into the directory where `manage.py` is:
